@@ -1,0 +1,2 @@
+﻿45339
+/usr/local/godot-3.3/Godot_v3.4-stable_mono_x11.64

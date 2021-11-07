@@ -1,16 +1,17 @@
 using System;
 using Godot;
 
-public class EntitySprite : SmartAnimatedSprite {
-    public override void _Ready () {
-        UpdateSpriteOrientation();
+public class EntitySprite : SmartAnimatedSprite 
+{
+    private Entity _entity;
+    public override void _Ready () 
+    {
+        _entity = GetParent<Entity>();
+        _entity.DirectionChanged += UpdateSpriteOrientation;
     }
 
-    public override void _Process (float delta) {
-        UpdateSpriteOrientation();
-    }
-
-    private void UpdateSpriteOrientation () {
-        FlipH = GetParent<Entity>().IsLookingLeft;
+    private void UpdateSpriteOrientation(bool direction)
+    {
+        FlipH = direction;
     }
 }

@@ -1,10 +1,8 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/FireballLayer.cs" type="Script" id=3]
-[ext_resource path="res://Assets/larry_koopa.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Enemy.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Perso.cs" type="Script" id=6]
 [ext_resource path="res://Assets/Sprites/Sprite_walk_2.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sprites/Sprite_attack_1.png" type="Texture" id=8]
@@ -58,22 +56,6 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=2]
 height = 66.0
-
-[sub_resource type="AtlasTexture" id=9]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 32, 33 )
-
-[sub_resource type="SpriteFrames" id=10]
-animations = [ {
-"frames": [ SubResource( 9 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
-[sub_resource type="CapsuleShape2D" id=11]
-height = 14.0
 
 [node name="Node2D" type="Node2D"]
 
@@ -177,7 +159,7 @@ jumpForce = 250.0
 position = Vector2( 9, 0 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 16 )
 
@@ -194,28 +176,6 @@ PackedBouleDeFeu = ExtResource( 2 )
 position = Vector2( 9, 0 )
 texture = ExtResource( 15 )
 script = ExtResource( 17 )
-
-[node name="Enemy" type="RigidBody2D" parent="Entity layer"]
-position = Vector2( 696, 485 )
-collision_layer = 4
-collision_mask = 3
-mode = 2
-gravity_scale = 10.0
-contacts_reported = 4
-contact_monitor = true
-applied_force = Vector2( 100, 0 )
-script = ExtResource( 5 )
-
-[node name="Sprite" type="AnimatedSprite" parent="Entity layer/Enemy"]
-frames = SubResource( 10 )
-script = ExtResource( 16 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entity layer/Enemy"]
-position = Vector2( 1, 1 )
-shape = SubResource( 11 )
 
 [node name="Fireball layer" type="Node2D" parent="."]
 script = ExtResource( 3 )

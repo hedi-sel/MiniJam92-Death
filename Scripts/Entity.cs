@@ -9,6 +9,7 @@ public class Entity : RigidBody2D {
 
     public bool IsGrounded { get; protected set; } = false;
     public bool IsLookingLeft { get; protected set; } = false;
+    public event Action<bool> DirectionChanged = _ => { };
 
     protected void Jump () {
         if (!IsGrounded)
@@ -36,7 +37,12 @@ public class Entity : RigidBody2D {
     }
 
     private void UpdateIsLookingLeft (bool right, bool left) {
-        if (left || right)
-            IsLookingLeft = left && !right;
+        if (!left && !right) return;
+        var newDirection = left && !right;
+        if (newDirection != IsLookingLeft)
+        {
+            IsLookingLeft = newDirection;
+            DirectionChanged(IsLookingLeft);
+        }
     }
 }

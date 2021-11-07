@@ -10,6 +10,5 @@ public class LanceurBouleDeFeu : Node2D
         Node2D instance = (Node2D)PackedBouleDeFeu.Instance();
         Fireball_layer.instance.AddChild(instance);
         instance.GlobalPosition = this.GlobalPosition;
-
     }
 }

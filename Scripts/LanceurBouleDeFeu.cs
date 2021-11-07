@@ -10,10 +10,11 @@ public class LanceurBouleDeFeu : Node2D
         Node2D fireball = (Node2D)PackedBouleDeFeu.Instance();
         FireballLayer.instance.AddChild(fireball);
         fireball.GlobalPosition = this.GlobalPosition;
+    }
 
     public override void _Input(InputEvent @event)
     {
-        if(@event.IsActionPressed("Throw_Fireball"))
+        if (@event.IsActionPressed("Throw_Fireball"))
             LancerBouleDeFeu();
     }
 }

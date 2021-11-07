@@ -1,12 +1,20 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
-[ext_resource path="res://BouleDefeu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/FireballLayer.cs" type="Script" id=3]
 [ext_resource path="res://Assets/larry_koopa.png" type="Texture" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 331, 26.5 )
+[sub_resource type="LineShape2D" id=6]
+
+[sub_resource type="LineShape2D" id=7]
+normal = Vector2( 0, 1 )
+
+[sub_resource type="LineShape2D" id=5]
+normal = Vector2( 1, 0 )
+
+[sub_resource type="LineShape2D" id=8]
+normal = Vector2( -1, 0 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
@@ -26,21 +34,51 @@ height = 10.0
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Ground" type="Node2D" parent="."]
-position = Vector2( -14, -2 )
+[node name="Terrain" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Sprite2" type="Sprite" parent="Ground"]
+[node name="Walls" type="StaticBody2D" parent="Terrain"]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Walls"]
+position = Vector2( 490, 557 )
+shape = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground/StaticBody2D"]
-position = Vector2( 529, 571 )
-shape = SubResource( 1 )
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Terrain/Walls"]
+position = Vector2( 511, 28 )
+shape = SubResource( 7 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Terrain/Walls"]
+position = Vector2( 53, 444 )
+shape = SubResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Terrain/Walls"]
+position = Vector2( 982, 379 )
+shape = SubResource( 8 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Entity layer" type="Node2D" parent="."]
 
 [node name="Perso" type="RigidBody2D" parent="Entity layer"]
 position = Vector2( 425, 485 )
+mode = 2
+gravity_scale = 10.0
+applied_force = Vector2( 100, 0 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Perso"]
 frames = SubResource( 4 )
@@ -51,9 +89,6 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entity layer/Perso"]
 position = Vector2( 1, 1 )
 shape = SubResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Lanceur de boule de feu" type="Node2D" parent="Entity layer/Perso"]
 position = Vector2( 9, -6 )
@@ -65,3 +100,6 @@ PackedBouleDeFeu = ExtResource( 2 )
 
 [node name="Fireball layer" type="Node2D" parent="."]
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}

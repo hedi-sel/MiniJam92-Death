@@ -1,9 +1,9 @@
 using System;
 using Godot;
 
-public class Fireball_layer : Node2D
+public class FireballLayer : Node2D
 {
-    public static Fireball_layer instance;
+    public static FireballLayer instance;
     public override void _Ready()
     {
         instance = this;

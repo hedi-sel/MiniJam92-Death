@@ -24,7 +24,9 @@ public class Entity : RigidBody2D
 
     public void Move(bool right, bool left, bool jump)
     {
-        LinearVelocity = hSpeed * ((right && !left) ? Vector2.Right : (left && !right) ? Vector2.Left : Vector2.Zero);
+        var velocity = LinearVelocity;
+        velocity.x = hSpeed * ((right && !left) ? 1 : (left && !right) ? -1 : 0);
+        LinearVelocity = velocity;
         if (jump)
             Jump();
     }

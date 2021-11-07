@@ -3,9 +3,10 @@ using Godot;
 
 public class FireballLayer : Node2D
 {
-    public static FireballLayer instance;
+    public static FireballLayer Instance { get; private set; }
+
     public override void _Ready()
     {
-        instance = this;
+        Instance = this;
     }
 }

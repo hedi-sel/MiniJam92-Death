@@ -15,7 +15,7 @@ public class Enemy : Entity
     [Export] float tanJumpAngle = 1.4f; // tangent of the angle below which he doesn't jump 
 
     // Gather data on player
-    Vector2 getPlayerPostion => new Vector2();
+    Vector2 getPlayerPostion => Perso.Instance.Position;
     bool canSeePlayer => (Position - getPlayerPostion).Length() < float.MaxValue;
 
     // Private data

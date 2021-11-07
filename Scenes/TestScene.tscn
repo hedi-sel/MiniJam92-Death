@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/FireballLayer.cs" type="Script" id=3]
 [ext_resource path="res://Assets/larry_koopa.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/Enemy.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Perso.cs" type="Script" id=6]
 
 [sub_resource type="LineShape2D" id=6]
 
@@ -79,6 +81,7 @@ position = Vector2( 425, 485 )
 mode = 2
 gravity_scale = 10.0
 applied_force = Vector2( 100, 0 )
+script = ExtResource( 6 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Perso"]
 frames = SubResource( 4 )
@@ -97,6 +100,24 @@ __meta__ = {
 "_edit_lock_": true
 }
 PackedBouleDeFeu = ExtResource( 2 )
+
+[node name="Enemy" type="RigidBody2D" parent="Entity layer"]
+position = Vector2( 696, 485 )
+mode = 2
+gravity_scale = 10.0
+applied_force = Vector2( 100, 0 )
+script = ExtResource( 5 )
+jumpForce = 100.0
+
+[node name="Sprite" type="AnimatedSprite" parent="Entity layer/Enemy"]
+frames = SubResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entity layer/Enemy"]
+position = Vector2( 1, 1 )
+shape = SubResource( 2 )
 
 [node name="Fireball layer" type="Node2D" parent="."]
 script = ExtResource( 3 )

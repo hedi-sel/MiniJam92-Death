@@ -14,6 +14,8 @@ public class Entity : RigidBody2D
 
     protected void Jump()
     {
+        if (!IsGrounded)
+            return;
         ApplyCentralImpulse(Vector2.Up * jumpForce);
     }
 

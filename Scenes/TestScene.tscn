@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
@@ -6,6 +6,14 @@
 [ext_resource path="res://Assets/larry_koopa.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Enemy.cs" type="Script" id=5]
 [ext_resource path="res://Scripts/Perso.cs" type="Script" id=6]
+[ext_resource path="res://Assets/Sprites/Sprite_walk_2.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/Sprite_attack_1.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/Sprite_walk.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprites/Sprite_walk_4.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Sprites/Sprite_walk_3.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sprites/Sprite_attack_3.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sprites/Sprite_attack_2.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Sprites/Sprite_idle.png" type="Texture" id=14]
 
 [sub_resource type="LineShape2D" id=6]
 
@@ -18,21 +26,39 @@ normal = Vector2( 1, 0 )
 [sub_resource type="LineShape2D" id=8]
 normal = Vector2( -1, 0 )
 
-[sub_resource type="AtlasTexture" id=3]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 3, 31, 31 )
-
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 3 ) ],
+"frames": [ ExtResource( 14 ) ],
 "loop": true,
-"name": "default",
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 13 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk",
 "speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
 height = 10.0
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 33 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="Node2D" type="Node2D"]
 
@@ -85,6 +111,9 @@ script = ExtResource( 6 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Perso"]
 frames = SubResource( 4 )
+animation = "attack"
+frame = 1
+playing = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -110,7 +139,7 @@ script = ExtResource( 5 )
 jumpForce = 100.0
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Enemy"]
-frames = SubResource( 4 )
+frames = SubResource( 10 )
 __meta__ = {
 "_edit_lock_": true
 }

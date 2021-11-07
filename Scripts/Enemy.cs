@@ -5,13 +5,11 @@ public class Enemy : Entity
 {
     public override void _Ready()
     {
-
     }
 
     [Export] float jumpReactionTime = 0.3f; //time between need for jump and jump
     [Export] float stopDistance = 10; //distance at which he stops pursuing
     [Export] float fixYDistance = 10; //Doesn't need to jump if the height difference is below this
-    [Export] float bonusYDistance = 20; //jumps slightly higher than the player (so he can reach the platform)
     [Export] float tanJumpAngle = 1.4f; // tangent of the angle below which he doesn't jump 
 
     // Gather data on player
@@ -47,8 +45,6 @@ public class Enemy : Entity
                     TimerFactory.MakeTimer(this, jumpReactionTime, () => { Jump(); jumpInitiated = false; });
                 }
             }
-            else if (getPlayerPostion.y < Position.y + bonusYDistance)
-                jump = true;
         }
 
         Move(right, left, jump);

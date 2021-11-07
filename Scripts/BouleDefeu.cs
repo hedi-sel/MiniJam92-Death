@@ -13,7 +13,6 @@ public class BouleDefeu : Node2D
     }
     public override void _Process(float delta)
     {
-        Position += new Vector2(IsLeftOriented ? -1 : 1 * delta * speed, 0);
-        //Console.WriteLine($" "instanceCount" );
+        Position += new Vector2((IsLeftOriented ? -1 : 1) * delta * speed, 0);
     }
 }

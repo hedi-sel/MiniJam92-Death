@@ -4,13 +4,10 @@ using System;
 public class Entity : RigidBody2D
 {
     [Export] private float hSpeed = 100;
-    [Export] private float jumpForce = 1000;
+    [Export] private float jumpForce = 100;
 
     public bool IsGrounded { get; protected set; } = false;
-
-    public override void _Ready()
-    {
-    }
+    public bool IsLookingLeft { get; protected set; } = false;
 
     protected void Jump()
     {
@@ -26,6 +23,7 @@ public class Entity : RigidBody2D
 
     public void Move(bool right, bool left, bool jump)
     {
+        UpdateIsLookingLeft(right, left);
         var velocity = LinearVelocity;
         velocity.x = hSpeed * ((right && !left) ? 1 : (left && !right) ? -1 : 0);
         LinearVelocity = velocity;
@@ -33,4 +31,9 @@ public class Entity : RigidBody2D
             Jump();
     }
 
+    private void UpdateIsLookingLeft(bool right, bool left)
+    {
+        if (left || right)
+            IsLookingLeft = left && !right;
+    }
 }

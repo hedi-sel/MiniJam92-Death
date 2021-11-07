@@ -14,7 +14,7 @@ public class LanceurBouleDeFeu : Node2D
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("Throw_Fireball"))
+        if (@event.IsActionPressed("throw_fireball"))
             LancerBouleDeFeu();
     }
 }

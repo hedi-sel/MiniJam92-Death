@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Assets/Sprites/Sprite_attack_3.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Sprites/Sprite_attack_2.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Sprites/Sprite_idle.png" type="Texture" id=14]
+[ext_resource path="res://Scripts/EntitySprite.cs" type="Script" id=15]
 
 [sub_resource type="LineShape2D" id=6]
 
@@ -108,12 +109,14 @@ mode = 2
 gravity_scale = 10.0
 applied_force = Vector2( 100, 0 )
 script = ExtResource( 6 )
+hSpeed = 150.0
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Perso"]
 frames = SubResource( 4 )
 animation = "attack"
-frame = 1
+frame = 2
 playing = true
+script = ExtResource( 15 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -136,7 +139,6 @@ mode = 2
 gravity_scale = 10.0
 applied_force = Vector2( 100, 0 )
 script = ExtResource( 5 )
-jumpForce = 100.0
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Enemy"]
 frames = SubResource( 10 )

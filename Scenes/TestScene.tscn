@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
@@ -16,9 +16,10 @@
 [ext_resource path="res://Assets/Sprites/Sprite_idle.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Sprites/Blood.png" type="Texture" id=15]
 [ext_resource path="res://Scripts/EntitySprite.cs" type="Script" id=16]
-[ext_resource path="res://PackedScenes/ZombieSpawner.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scripts/BloodSack.cs" type="Script" id=17]
 [ext_resource path="res://Assets/Sprites/Bg.png" type="Texture" id=18]
 [ext_resource path="res://Scripts/EntityLayer.cs" type="Script" id=19]
+[ext_resource path="res://PackedScenes/ZombieSpawner.tscn" type="PackedScene" id=20]
 
 [sub_resource type="LineShape2D" id=7]
 normal = Vector2( 0, 1 )
@@ -41,6 +42,12 @@ b = Vector2( 160, 4 )
 
 [sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 612, 355 )
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 150, 236 )
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 144.5, 236 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -70,12 +77,6 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="RectangleShape2D" id=16]
-extents = Vector2( 150, 236 )
-
-[sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 144.5, 236 )
 
 [node name="Node2D" type="Node2D"]
 __meta__ = {
@@ -209,6 +210,40 @@ script = ExtResource( 4 )
 position = Vector2( 526, 294 )
 shape = SubResource( 15 )
 
+[node name="Spawners" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ZombieSpawner" parent="Spawners" instance=ExtResource( 20 )]
+position = Vector2( 165, 283 )
+
+[node name="ZombieSpawner2" parent="Spawners" instance=ExtResource( 20 )]
+position = Vector2( 755, 283 )
+
+[node name="ZombieSpawner3" parent="Spawners" instance=ExtResource( 20 )]
+position = Vector2( 751, 84 )
+
+[node name="NoTouchZone" parent="Spawners/ZombieSpawner3" index="0"]
+position = Vector2( 75, 16 )
+shape = SubResource( 16 )
+
+[node name="Position2D" parent="Spawners/ZombieSpawner3" index="1"]
+position = Vector2( -75, 16 )
+
+[node name="ZombieSpawner4" parent="Spawners" instance=ExtResource( 20 )]
+position = Vector2( 299, 81 )
+
+[node name="NoTouchZone" parent="Spawners/ZombieSpawner4" index="0"]
+position = Vector2( 53.5, 16 )
+shape = SubResource( 17 )
+
+[node name="Position2D" parent="Spawners/ZombieSpawner4" index="1"]
+position = Vector2( -81, 18 )
+
+[node name="Position2D2" parent="Spawners/ZombieSpawner4" index="2"]
+position = Vector2( 182, 16 )
+
 [node name="Entity layer" type="Node2D" parent="."]
 script = ExtResource( 19 )
 __meta__ = {
@@ -216,7 +251,7 @@ __meta__ = {
 }
 
 [node name="Perso" type="RigidBody2D" parent="Entity layer"]
-position = Vector2( 390, 479 )
+position = Vector2( 468, 480 )
 collision_layer = 20
 collision_mask = 3
 mode = 2
@@ -226,12 +261,13 @@ contact_monitor = true
 script = ExtResource( 6 )
 hSpeed = 250.0
 jumpForce = 250.0
+DamagePerHit = 10.0
 
 [node name="Sprite" type="AnimatedSprite" parent="Entity layer/Perso"]
 position = Vector2( 9, 0 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 3
+frame = 2
 playing = true
 script = ExtResource( 16 )
 __meta__ = {
@@ -255,11 +291,25 @@ __meta__ = {
 PackedBouleDeFeu = ExtResource( 2 )
 
 [node name="Blood" type="AnimatedSprite" parent="Entity layer/Perso"]
+visible = false
 position = Vector2( 9, 0 )
 frames = SubResource( 14 )
 script = ExtResource( 16 )
 __meta__ = {
 "_edit_lock_": true
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="Entity layer/Perso"]
+margin_left = -46.0
+margin_top = -55.0
+margin_right = 64.0
+margin_bottom = 55.0
+value = 60.0
+texture_progress = ExtResource( 15 )
+fill_mode = 3
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [node name="Enemy" parent="Entity layer" instance=ExtResource( 5 )]
@@ -271,34 +321,5 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ZombieSpawner" parent="." instance=ExtResource( 17 )]
-position = Vector2( 165, 283 )
-
-[node name="ZombieSpawner2" parent="." instance=ExtResource( 17 )]
-position = Vector2( 755, 283 )
-
-[node name="ZombieSpawner3" parent="." instance=ExtResource( 17 )]
-position = Vector2( 751, 84 )
-
-[node name="NoTouchZone" parent="ZombieSpawner3" index="0"]
-position = Vector2( 75, 16 )
-shape = SubResource( 16 )
-
-[node name="Position2D" parent="ZombieSpawner3" index="1"]
-position = Vector2( -75, 16 )
-
-[node name="ZombieSpawner4" parent="." instance=ExtResource( 17 )]
-position = Vector2( 299, 81 )
-
-[node name="NoTouchZone" parent="ZombieSpawner4" index="0"]
-position = Vector2( 53.5, 16 )
-shape = SubResource( 17 )
-
-[node name="Position2D" parent="ZombieSpawner4" index="1"]
-position = Vector2( -81, 18 )
-
-[node name="Position2D2" parent="ZombieSpawner4" index="2"]
-position = Vector2( 182, 16 )
-
-[editable path="ZombieSpawner3"]
-[editable path="ZombieSpawner4"]
+[editable path="Spawners/ZombieSpawner3"]
+[editable path="Spawners/ZombieSpawner4"]

@@ -46,7 +46,16 @@ public class Perso : Entity {
             CurrentState = State.walk;
         else
             CurrentState = State.idle;
+    }
 
+    public event Action<float> UpdateHp;
+    [Export] public readonly float MaxHp = 100;
+    [Export] public readonly float DamagePerHit = 2;
 
+    public float MissingHp { get; private set; } = 0;
+
+    public void Hit () {
+        MissingHp += DamagePerHit;
+        UpdateHp(1 - (MissingHp / MaxHp));
     }
 }

@@ -39,10 +39,23 @@ public class Entity : RigidBody2D {
     private void UpdateIsLookingLeft (bool right, bool left) {
         if (!left && !right) return;
         var newDirection = left && !right;
-        if (newDirection != IsLookingLeft)
-        {
+        if (newDirection != IsLookingLeft) {
             IsLookingLeft = newDirection;
             DirectionChanged(IsLookingLeft);
         }
+    }
+
+    [Export] float deathTime = 0.6f;
+    [Export] float deathDistance = 150;
+
+    public void Die (Vector2 Origin) {
+        CollisionLayer = 0;
+        CollisionMask = 0;
+        Tween tween = new Tween();
+        AddChild(tween);
+        tween.InterpolateProperty(this, "position", Position, Position + (Origin - GlobalPosition).Normalized() * deathDistance, deathTime);
+        tween.InterpolateProperty(this, "modulate:a", 1, 0.2, deathTime, Tween.TransitionType.Quad);
+        Callback.Connect(tween, "tween_all_completed", () => this.QueueFree());
+        tween.Start();
     }
 }

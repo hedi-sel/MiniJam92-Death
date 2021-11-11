@@ -6,25 +6,23 @@ public class LanceurBouleDeFeu : Node2D {
     private Entity _entity;
     private bool isLeftOriented;
 
-    public override void _Ready()
-    {
+    public override void _Ready () {
         _entity = GetParent<Entity>();
         _entity.DirectionChanged += UpdatePositionAndDirection;
         isLeftOriented = _entity.IsLookingLeft;
     }
 
-    private void UpdatePositionAndDirection(bool orientation)
-    {
-        Position *= new Vector2(-1,0);
+    private void UpdatePositionAndDirection (bool orientation) {
+        Position *= new Vector2(-1, 0);
         isLeftOriented = orientation;
     }
 
     bool CanAttack () => GetParent<Perso>().CurrentState != Perso.State.attack;
 
     private void LancerBouleDeFeu () {
-        var fireball = (BouleDefeu)PackedBouleDeFeu.Instance();
-        FireballLayer.Instance.AddChild(fireball);
+        var fireball = (BouleDefeu) PackedBouleDeFeu.Instance();
         fireball.IsLeftOriented = isLeftOriented;
+        FireballLayer.Instance.AddChild(fireball);
         fireball.GlobalPosition = this.GlobalPosition;
     }
 

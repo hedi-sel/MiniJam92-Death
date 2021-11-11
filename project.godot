@@ -42,6 +42,7 @@ jump={
 2d_physics/layer_1="walls"
 2d_physics/layer_2="ground/platforms"
 2d_physics/layer_3="entities"
+2d_physics/layer_4="projectiles"
 
 [physics]
 

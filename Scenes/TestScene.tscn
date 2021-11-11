@@ -1,8 +1,10 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/FireballLayer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/ProjectileTracker.cs" type="Script" id=4]
+[ext_resource path="res://PackedScenes/Enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Perso.cs" type="Script" id=6]
 [ext_resource path="res://Assets/Sprites/Sprite_walk_2.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sprites/Sprite_attack_1.png" type="Texture" id=8]
@@ -14,7 +16,6 @@
 [ext_resource path="res://Assets/Sprites/Sprite_idle.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Sprites/Blood.png" type="Texture" id=15]
 [ext_resource path="res://Scripts/EntitySprite.cs" type="Script" id=16]
-[ext_resource path="res://Scripts/BloodSack.cs" type="Script" id=17]
 [ext_resource path="res://Assets/Sprites/Bg.png" type="Texture" id=18]
 
 [sub_resource type="LineShape2D" id=7]
@@ -35,6 +36,9 @@ b = Vector2( 221, -1 )
 [sub_resource type="SegmentShape2D" id=13]
 a = Vector2( -146, 3 )
 b = Vector2( 160, 4 )
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 612, 355 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -57,7 +61,18 @@ animations = [ {
 [sub_resource type="CapsuleShape2D" id=2]
 height = 66.0
 
+[sub_resource type="SpriteFrames" id=14]
+animations = [ {
+"frames": [ ExtResource( 15 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
 [node name="Node2D" type="Node2D"]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Terrain" type="Node2D" parent="."]
 __meta__ = {
@@ -67,6 +82,9 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Terrain"]
 position = Vector2( 512, 300 )
 texture = ExtResource( 18 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Walls" type="StaticBody2D" parent="Terrain"]
 collision_mask = 4
@@ -98,6 +116,9 @@ __meta__ = {
 [node name="Ground" type="StaticBody2D" parent="Terrain"]
 collision_layer = 2
 collision_mask = 4
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Ground"]
 position = Vector2( 474, 552 )
@@ -109,47 +130,85 @@ __meta__ = {
 [node name="StaticBody2D" type="StaticBody2D" parent="Terrain"]
 collision_layer = 2
 collision_mask = 4
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/StaticBody2D"]
 position = Vector2( 194, 364 )
 shape = SubResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Terrain"]
 position = Vector2( 620, 1 )
 collision_layer = 2
 collision_mask = 4
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/StaticBody2D2"]
 position = Vector2( 194, 364 )
 shape = SubResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Terrain"]
 position = Vector2( 661, -207 )
 collision_layer = 2
 collision_mask = 4
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/StaticBody2D3"]
 position = Vector2( 194, 364 )
 shape = SubResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="Terrain"]
 position = Vector2( 151, -212 )
 collision_layer = 2
 collision_mask = 4
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/StaticBody2D4"]
 position = Vector2( 194, 364 )
 shape = SubResource( 13 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ProjectileTracker" type="Area2D" parent="Terrain"]
+visible = false
+position = Vector2( -12, -1 )
+collision_layer = 0
+collision_mask = 8
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/ProjectileTracker"]
+position = Vector2( 526, 294 )
+shape = SubResource( 15 )
 
 [node name="Entity layer" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Perso" type="RigidBody2D" parent="Entity layer"]
-position = Vector2( 425, 485 )
+position = Vector2( 390, 479 )
 collision_layer = 4
 collision_mask = 3
 mode = 2
 gravity_scale = 10.0
-contacts_reported = 4
+contacts_reported = 5
 contact_monitor = true
 script = ExtResource( 6 )
 hSpeed = 250.0
@@ -159,23 +218,39 @@ jumpForce = 250.0
 position = Vector2( 9, 0 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 1
+frame = 3
 playing = true
 script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entity layer/Perso"]
+visible = false
 position = Vector2( -4, 11 )
 shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Lanceur de boule de feu" type="Node2D" parent="Entity layer/Perso"]
 position = Vector2( 18, -6 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 PackedBouleDeFeu = ExtResource( 2 )
 
-[node name="Blood" type="Sprite" parent="Entity layer/Perso"]
+[node name="Blood" type="AnimatedSprite" parent="Entity layer/Perso"]
 position = Vector2( 9, 0 )
-texture = ExtResource( 15 )
-script = ExtResource( 17 )
+frames = SubResource( 14 )
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Enemy" parent="Entity layer" instance=ExtResource( 5 )]
+position = Vector2( 737, 453 )
 
 [node name="Fireball layer" type="Node2D" parent="."]
 script = ExtResource( 3 )

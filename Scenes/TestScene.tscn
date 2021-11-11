@@ -1,11 +1,11 @@
 [gd_scene load_steps=33 format=2]
 
-[ext_resource path="res://Scripts/LanceurBouleDeFeu.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Components/LanceurBouleDeFeu.cs" type="Script" id=1]
 [ext_resource path="res://PackedScenes/BouleDefeu.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/FireballLayer.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/ProjectileTracker.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/AreasLayers/FireballLayer.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/AreasLayers/ProjectileTracker.cs" type="Script" id=4]
 [ext_resource path="res://PackedScenes/Enemy.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Perso.cs" type="Script" id=6]
+[ext_resource path="res://Scripts/Entities/Perso.cs" type="Script" id=6]
 [ext_resource path="res://Assets/Sprites/Sprite_walk_2.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sprites/Sprite_attack_1.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Sprites/Sprite_walk.png" type="Texture" id=9]
@@ -15,10 +15,10 @@
 [ext_resource path="res://Assets/Sprites/Sprite_attack_2.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Sprites/Sprite_idle.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Sprites/Blood.png" type="Texture" id=15]
-[ext_resource path="res://Scripts/EntitySprite.cs" type="Script" id=16]
-[ext_resource path="res://Scripts/BloodSack.cs" type="Script" id=17]
+[ext_resource path="res://Scripts/Components/EntitySprite.cs" type="Script" id=16]
+[ext_resource path="res://Scripts/Components/BloodSack.cs" type="Script" id=17]
 [ext_resource path="res://Assets/Sprites/Bg.png" type="Texture" id=18]
-[ext_resource path="res://Scripts/EntityLayer.cs" type="Script" id=19]
+[ext_resource path="res://Scripts/AreasLayers/EntityLayer.cs" type="Script" id=19]
 [ext_resource path="res://PackedScenes/ZombieSpawner.tscn" type="PackedScene" id=20]
 
 [sub_resource type="LineShape2D" id=7]
@@ -267,7 +267,7 @@ DamagePerHit = 10.0
 position = Vector2( 9, 0 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 2
+frame = 3
 playing = true
 script = ExtResource( 16 )
 __meta__ = {
